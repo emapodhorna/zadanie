@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
+PREM="https://www.bing.com/search?q="
+
 while [ "$#" != 0 ]
 do
-PREM="$1+"
+PREM="$PREM$1+"
 shift
 done
 
-curl -s https://www.bing.com/search?q="$PREM" | tr -d '\n' | tr '<' '\n'
+curl -s "$PREM" | tr -d '\n' | tr '<' '\n' | grep 'a href=' | sed 's/a href="//' | sed 's/".*//' | sort | uniq 
 
